@@ -25,7 +25,7 @@ public class PostController {
 
     @PostConstruct
     public void setUp() {
-        TeamSaveRequest teamSaveRequest1 = new TeamSaveRequest("개발부");
+        TeamSaveRequest teamSaveRequest1 = new TeamSaveRequest("개발부", 5);
         teamService.save(teamSaveRequest1);
 
         MemberSaveRequest memberSaveRequest1 = new MemberSaveRequest("홍길동", "개발부", "manager",

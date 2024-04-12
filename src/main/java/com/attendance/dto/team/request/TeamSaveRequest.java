@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 public class TeamSaveRequest {
 
     private String name;
+    private Integer vacationDeadline;
 
-    public TeamSaveRequest(String name) {
+    public TeamSaveRequest(String name, Integer vacationDeadline) {
         this.name = name;
+        this.vacationDeadline = vacationDeadline;
     }
 }

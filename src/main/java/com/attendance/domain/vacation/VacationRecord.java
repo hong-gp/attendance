@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,8 +26,12 @@ public class VacationRecord {
     private LocalDate vacationDate;
 
     @Builder
-    public VacationRecord(Member member, LocalDate vacationDate) {
+    public VacationRecord(Member member, String vacationDate) {
         this.member = member;
-        this.vacationDate = vacationDate;
+        try {
+            this.vacationDate = LocalDate.parse(vacationDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("잘못된 날짜입니다.");
+        }
     }
 }

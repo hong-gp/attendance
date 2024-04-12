@@ -24,15 +24,17 @@ public class Team {
     @OneToOne
     private Member manager;
 
-    private Integer memberCount;
+    private Integer memberCount = 0;
+
+    private Integer vacationDeadline;
 
     @OneToMany
     private List<Member> members;
 
     @Builder
-    public Team(String name) {
+    public Team(String name, Integer vacationDeadline) {
         this.name = name;
-        this.memberCount = 0;
+        this.vacationDeadline = vacationDeadline;
     }
 
     public void changeTeamManager(Member member) {

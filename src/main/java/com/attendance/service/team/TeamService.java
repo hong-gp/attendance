@@ -23,6 +23,7 @@ public class TeamService {
     public void save(TeamSaveRequest request) {
         Team team = Team.builder()
                 .name(request.getName())
+                .vacationDeadline(request.getVacationDeadline())
                 .build();
 
         teamRepository.save(team);

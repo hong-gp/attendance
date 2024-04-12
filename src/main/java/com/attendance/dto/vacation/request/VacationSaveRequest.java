@@ -3,7 +3,6 @@ package com.attendance.dto.vacation.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -11,10 +10,12 @@ import java.util.List;
 public class VacationSaveRequest {
 
     private Long memberId;
-    private List<LocalDate> vacationDate;
+    private String requestDate;
+    private List<String> vacationDate;
 
-    public VacationSaveRequest(Long memberId, List<LocalDate> vacationDate) {
+    public VacationSaveRequest(Long memberId, String requestDate, List<String> vacationDate) {
         this.memberId = memberId;
+        this.requestDate = requestDate;
         this.vacationDate = vacationDate;
     }
 }
