@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,17 +28,31 @@ public class VacationService {
             throw new IllegalArgumentException("존재하지 않는 직원입니다.");
         });
 
-        // 휴가를 작성한 날짜가 팀 휴가 마감일 조건을 만족하는지 확인
-        // 1. 휴가를 사용한 날짜에서 휴가 마감일을 뺏을 때 오늘(신청일)보다 미래인지
-
         for (String date : request.getVacationDate()) {
-            vacationRepository.save(VacationRecord.builder()
+            try {
+                LocalDate parseDate = LocalDate.parse(date);
+                if (vacationRepository.existsByMemberAndVacationDate(member, parseDate)) {
+                    throw new IllegalArgumentException("이미 연차를 사용한 날짜입니다.");
+                }
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("잘못된 날짜입니다.");
+            }
+
+            VacationRecord vacationRecord = VacationRecord.builder()
                     .member(member)
-                    .vacationDate(date)
-                    .build()
-            );
+                    .build();
+            vacationRecord.checkDeadline(request.getRequestDate(), date);
+            member.addVacationRecord(vacationRecord);
             member.getVacation().decrementVacationCount();
         }
 
+    }
+
+    @Transactional(readOnly = true)
+    public int readVacationCount(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            throw new IllegalArgumentException("존재하지 않은 직원입니다.");
+        });
+        return member.getVacation().getVacationCount();
     }
 }

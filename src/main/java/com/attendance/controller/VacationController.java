@@ -3,9 +3,7 @@ package com.attendance.controller;
 import com.attendance.dto.vacation.request.VacationSaveRequest;
 import com.attendance.service.VacationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,5 +14,10 @@ public class VacationController {
     @PostMapping("/vacations/save")
     public void save(@RequestBody VacationSaveRequest request) {
         vacationService.save(request);
+    }
+
+    @GetMapping("/vacations/{memberId}/vacation-count")
+    public int readVacationCount(@PathVariable Long memberId) {
+        return vacationService.readVacationCount(memberId);
     }
 }

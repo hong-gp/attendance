@@ -23,6 +23,9 @@ public class Vacation {
     }
 
     public void decrementVacationCount() {
+        if (this.vacationCount <= 0) {
+            throw new IllegalArgumentException("연차가 부족합니다.");
+        }
         this.vacationCount--;
     }
 }

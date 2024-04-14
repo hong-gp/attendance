@@ -6,6 +6,7 @@ import com.attendance.dto.workrecord.request.EndWorkRequest;
 import com.attendance.dto.workrecord.request.StartWorkRequest;
 import com.attendance.dto.workrecord.response.WorkTimeResponse;
 import com.attendance.repository.MemberRepository;
+import com.attendance.repository.VacationRepository;
 import com.attendance.repository.WorkRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class WorkRecordService {
 
     private final WorkRecordRepository workRecordRepository;
     private final MemberRepository memberRepository;
+    private final VacationRepository vacationRepository;
 
     @Transactional
     public void startWork(StartWorkRequest request) {

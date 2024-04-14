@@ -11,6 +11,7 @@ public class DailyWorkTime {
 
     LocalDate date;
     Integer workingMinutes;
+    boolean usingDayOff;
 
     public DailyWorkTime(WorkRecord workRecord) {
         this.date = workRecord.getWorkDate();

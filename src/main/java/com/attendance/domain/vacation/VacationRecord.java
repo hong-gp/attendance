@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,10 +27,20 @@ public class VacationRecord {
     private LocalDate vacationDate;
 
     @Builder
-    public VacationRecord(Member member, String vacationDate) {
+    public VacationRecord(Member member) {
         this.member = member;
+    }
+
+    public void checkDeadline(String requestDateStr, String vacationDateStr) {
         try {
-            this.vacationDate = LocalDate.parse(vacationDate);
+            LocalDate requestDate = LocalDate.parse(requestDateStr);
+            LocalDate vacationDate = LocalDate.parse(vacationDateStr);
+
+            if (requestDate.until(vacationDate, ChronoUnit.DAYS) >= member.getTeam().getVacationDeadline()) {
+                this.vacationDate = vacationDate;
+            } else {
+                throw new IllegalArgumentException("휴가 마감일이 지났습니다.");
+            }
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("잘못된 날짜입니다.");
         }

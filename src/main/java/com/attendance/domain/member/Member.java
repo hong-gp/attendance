@@ -65,4 +65,8 @@ public class Member {
     public void addWorkRecord(WorkRecord workRecord) {
         this.workRecords.add(workRecord);
     }
+
+    public void addVacationRecord(VacationRecord vacationRecord) {
+        this.vacationRecords.add(vacationRecord);
+    }
 }
